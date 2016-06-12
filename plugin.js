@@ -105,7 +105,7 @@ function pddlInsertNetwork() {
     html += '<div class="form-group">';
     html += '  <label for="adjacencySetting" class="col-sm-2 control-label">Adjacency List</label>';
     html += '  <div class="input-group col-sm-8">';
-    html += '    <textarea id="adjacencySetting" class="form-control" rows="13" placeholder="Space separated numbers. Each line is a chain."></textarea>';
+    html += '    <textarea id="adjacencySetting" class="form-control" rows="13" placeholder="Space separated location ids. Each line is a chain."></textarea>';
     html += '  </div>';
     html += '</div>';
 
@@ -190,6 +190,14 @@ function pddlInsertGrid() {
     html += '<form class="form-horizontal">';
 
     html += '<div class="form-group">';
+    html += '  <div class="col-sm-offset-2 col-sm-10">';
+    html += '    <div class="checkbox">';
+    html += '      <label><input id="networkTypeSetting" type="checkbox"> Directed</label>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    html += '<div class="form-group">';
     html += '  <label for="gridTypeSplitSetting" class="col-sm-2 control-label">Grid Type</label>';
     html += '  <div class="input-group col-sm-5">';
     html += '    <label><input type="radio" name="inlineRadioOptions" id="gridTypeMonolithicSetting" value="monolithicGrid" checked> Monolithic Location Objects</label>';
@@ -236,13 +244,16 @@ function pddlInsertGrid() {
     $('#locPostSetting').val(window.pddlInsertSettings.grid.lpos);
     $('#gridConnectionSetting').val(window.pddlInsertSettings.grid.conn);
     $('#gridTypeMonolithicSetting').prop('checked', window.pddlInsertSettings.grid.mono);
+    $('#networkTypeSetting').prop('checked', window.pddlInsertSettings.network.directed);
 
     $('#pddlInsertModal').modal('toggle');
 
 }
 
-function doPddlInsertGrid(xval, yval, lpre, lpos, monolithicGridType, conPred, skipModalToggle) {
+function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, conPred, skipModalToggle) {
 
+    if (typeof directed === "undefined")
+        directed = $('#networkTypeSetting').is(':checked');
     if (typeof xval === "undefined")
         xval = parseInt($('#xSizeSetting').val());
     if (typeof yval === "undefined")
@@ -284,12 +295,16 @@ function doPddlInsertGrid(xval, yval, lpre, lpos, monolithicGridType, conPred, s
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + (i-1) + '_' + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
                     l2 = lpre + j + lpos;
                     l3 = lpre + (i-1) + lpos;
                     l4 = lpre + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
 
@@ -299,12 +314,16 @@ function doPddlInsertGrid(xval, yval, lpre, lpos, monolithicGridType, conPred, s
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + (i+1) + '_' + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
                     l2 = lpre + j + lpos;
                     l3 = lpre + (i+1) + lpos;
                     l4 = lpre + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
 
@@ -314,12 +333,16 @@ function doPddlInsertGrid(xval, yval, lpre, lpos, monolithicGridType, conPred, s
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + i + '_' + (j+1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
                     l2 = lpre + j + lpos;
                     l3 = lpre + i + lpos;
                     l4 = lpre + (j+1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
 
@@ -329,12 +352,16 @@ function doPddlInsertGrid(xval, yval, lpre, lpos, monolithicGridType, conPred, s
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + i + '_' + (j-1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
                     l2 = lpre + j + lpos;
                     l3 = lpre + i + lpos;
                     l4 = lpre + (j-1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
+                    if (directed)
+                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
         }
@@ -348,6 +375,7 @@ function doPddlInsertGrid(xval, yval, lpre, lpos, monolithicGridType, conPred, s
         window.pddlInsertSettings.grid.lpos = $('#locPostSetting').val();
         window.pddlInsertSettings.grid.conn = $('#gridConnectionSetting').val();
         window.pddlInsertSettings.grid.mono = $('#gridTypeMonolithicSetting').is(':checked');
+        window.pddlInsertSettings.network.directed = $('#networkTypeSetting').is(':checked');
 
         $('#pddlInsertModal').modal('toggle');
     }
