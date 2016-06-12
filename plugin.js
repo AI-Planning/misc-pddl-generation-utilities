@@ -295,7 +295,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + (i-1) + '_' + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
@@ -303,7 +303,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l3 = lpre + (i-1) + lpos;
                     l4 = lpre + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
@@ -314,7 +314,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + (i+1) + '_' + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
@@ -322,7 +322,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l3 = lpre + (i+1) + lpos;
                     l4 = lpre + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
@@ -333,7 +333,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + i + '_' + (j+1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
@@ -341,7 +341,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l3 = lpre + i + lpos;
                     l4 = lpre + (j+1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
@@ -352,7 +352,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + i + '_' + (j-1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
@@ -360,7 +360,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                     l3 = lpre + i + lpos;
                     l4 = lpre + (j-1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (directed)
+                    if (!directed)
                         pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
