@@ -289,81 +289,70 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
     for (var i = 1; i <= xval; i++) {
         for (var j = 1; j <= yval; j++) {
             var l1, l2, l3, l4;
-            // Go left
-            if (i > 1) {
-                if (monolithicGridType) {
-                    l1 = lpre + i + '_' + j + lpos;
-                    l2 = lpre + (i-1) + '_' + j + lpos;
-                    pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
-                } else {
-                    l1 = lpre + i + lpos;
-                    l2 = lpre + j + lpos;
-                    l3 = lpre + (i-1) + lpos;
-                    l4 = lpre + j + lpos;
-                    pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
-                }
-            }
-
+            // All the points are drawn to the right except for the right-most column
             // Go right
             if (i < xval) {
                 if (monolithicGridType) {
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + (i+1) + '_' + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
                     l2 = lpre + j + lpos;
                     l3 = lpre + (i+1) + lpos;
                     l4 = lpre + j + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
-
+            // All the points are drawn to the up except for the front-most row
             // Go up
             if (j < yval) {
                 if (monolithicGridType) {
                     l1 = lpre + i + '_' + j + lpos;
                     l2 = lpre + i + '_' + (j+1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
                 } else {
                     l1 = lpre + i + lpos;
                     l2 = lpre + j + lpos;
                     l3 = lpre + i + lpos;
                     l4 = lpre + (j+1) + lpos;
                     pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
                 }
             }
 
-            // Go down
-            if (j > 1) {
-                if (monolithicGridType) {
-                    l1 = lpre + i + '_' + j + lpos;
-                    l2 = lpre + i + '_' + (j-1) + lpos;
-                    pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l2 + ' ' + l1 + ')';
-                } else {
-                    l1 = lpre + i + lpos;
-                    l2 = lpre + j + lpos;
-                    l3 = lpre + i + lpos;
-                    l4 = lpre + (j-1) + lpos;
-                    pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
-                    if (!directed)
-                        pddl += '\n(' + conPred + ' ' + l3 + ' ' + l4 + ' ' + l1 + ' ' + l2 + ')';
+            // When it is a directed graph, reverse and rebuild a line between 2 points
+            if (directed) {
+                // Go left
+                if (i > 1) {
+                    if (monolithicGridType) {
+                        l1 = lpre + i + '_' + j + lpos;
+                        l2 = lpre + (i-1) + '_' + j + lpos;
+                        pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
+                    } else {
+                        l1 = lpre + i + lpos;
+                        l2 = lpre + j + lpos;
+                        l3 = lpre + (i-1) + lpos;
+                        l4 = lpre + j + lpos;
+                        pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
+                    }
+                }
+
+                // Go down
+                if (j > 1) {
+                    if (monolithicGridType) {
+                        l1 = lpre + i + '_' + j + lpos;
+                        l2 = lpre + i + '_' + (j-1) + lpos;
+                        pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ')';
+                    } else {
+                        l1 = lpre + i + lpos;
+                        l2 = lpre + j + lpos;
+                        l3 = lpre + i + lpos;
+                        l4 = lpre + (j-1) + lpos;
+                        pddl += '\n(' + conPred + ' ' + l1 + ' ' + l2 + ' ' + l3 + ' ' + l4 + ')';
+                    }
                 }
             }
+
         }
     }
 
