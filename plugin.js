@@ -192,7 +192,7 @@ function pddlInsertGrid() {
     html += '<div class="form-group">';
     html += '  <div class="col-sm-offset-2 col-sm-10">';
     html += '    <div class="checkbox">';
-    html += '      <label><input id="networkTypeSetting" type="checkbox"> Directed</label>';
+    html += '      <label><input id="networkTypeSetting" type="checkbox"> Symmetric Edges</label>';
     html += '    </div>';
     html += '  </div>';
     html += '</div>';
@@ -244,16 +244,16 @@ function pddlInsertGrid() {
     $('#locPostSetting').val(window.pddlInsertSettings.grid.lpos);
     $('#gridConnectionSetting').val(window.pddlInsertSettings.grid.conn);
     $('#gridTypeMonolithicSetting').prop('checked', window.pddlInsertSettings.grid.mono);
-    $('#networkTypeSetting').prop('checked', window.pddlInsertSettings.network.directed);
+    $('#networkTypeSetting').prop('checked', window.pddlInsertSettings.grid.symmetric);
 
     $('#pddlInsertModal').modal('toggle');
 
 }
 
-function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, conPred, skipModalToggle) {
+function doPddlInsertGrid(symmetric, xval, yval, lpre, lpos, monolithicGridType, conPred, skipModalToggle) {
 
-    if (typeof directed === "undefined")
-        directed = $('#networkTypeSetting').is(':checked');
+    if (typeof symmetric === "undefined")
+        symmetric = $('#networkTypeSetting').is(':checked');
     if (typeof xval === "undefined")
         xval = parseInt($('#xSizeSetting').val());
     if (typeof yval === "undefined")
@@ -320,8 +320,8 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
                 }
             }
 
-            // When it is a directed graph, reverse and rebuild a line between 2 points
-            if (directed) {
+            // When it is a symmetric graph, reverse and rebuild a line between 2 points
+            if (symmetric) {
                 // Go left
                 if (i > 1) {
                     if (monolithicGridType) {
@@ -364,7 +364,7 @@ function doPddlInsertGrid(directed, xval, yval, lpre, lpos, monolithicGridType, 
         window.pddlInsertSettings.grid.lpos = $('#locPostSetting').val();
         window.pddlInsertSettings.grid.conn = $('#gridConnectionSetting').val();
         window.pddlInsertSettings.grid.mono = $('#gridTypeMonolithicSetting').is(':checked');
-        window.pddlInsertSettings.network.directed = $('#networkTypeSetting').is(':checked');
+        window.pddlInsertSettings.grid.symmetric = $('#networkTypeSetting').is(':checked');
 
         $('#pddlInsertModal').modal('toggle');
     }
@@ -560,7 +560,8 @@ define(function () {
             yval: 4,
             lpre: 'loc',
             lpos: '',
-            conn: 'connected'
+            conn: 'connected',
+            symmetric: true
         },
         network: {
             directed: false,
